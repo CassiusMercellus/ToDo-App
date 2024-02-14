@@ -4,18 +4,22 @@
       rgba(66, 45, 253, 0.73) 10%,
       #921616 100%
     );
-    --dark: #001747;
+    --dark: #ffffff;
     --grey: #b1bacb;
     --grey-border: rgba(210, 210, 210, 0.75);
     --grey-light: #eeeeee;
     --grey-dark: #405175;
     --red: #ce1913;
     --blue: #1749b4;
-    --white: #ffffff;
+    --white: rgba(255, 255, 255);
+    --transparent: rgba(59, 59, 59, 0.4);
   }
   
   body {
-    background: var(--gradient);
+    background-image: url(/Assets/Agera.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     margin: 0;
     height: 100vh;
     display: flex;
@@ -46,6 +50,165 @@
     margin: 0;
   }
   
+  /* Todo List Selector */
+
+  .h-todo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border-radius: 2rem;
+    background: var(--transparent);
+    padding: 3rem;
+    height: 50%;
+    width: 60%;
+    box-shadow: 0 1rem 3rem 1rem rgba(0, 23, 71, 0.15);
+    max-width: 40rem;
+    position: absolute;
+    z-index: -1;
+  }
+  
+  .h-btn {
+    color: var(--white);
+    font-size: 1.1rem;
+    padding: 0.7rem 1.5rem;
+    border-radius: 0.3rem;
+    background-color: var(--blue);
+    border: none;
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
+  }
+
+  .h-todo h2 {
+    text-transform: uppercase;
+    height: 5rem;
+    font-size:  1.8rem;
+    color: var(--dark);
+    text-align: center;
+  }
+  
+  .h-input {
+    position: relative;
+    display: flex;
+  }
+  
+  .h-input-field {
+    width: 100%;
+    border: 0.06rem solid #d2d2d2bf;
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+    font-size: 1rem;
+  }
+  
+  .h-todoContainer {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .h-todoContainer-left {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .h-todoContainer-right {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .h-todo ul {
+    padding: 0;
+    margin: 0;
+    overflow-y: scroll;
+  }
+  
+  .h-todo li {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding: 1.3rem;
+  }
+  
+  #h-todoList p {
+    display: flex;
+    gap: 1rem;
+    color: var(--dark);
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+
+  #h-todoList .disabled {
+    color: #8f98a8;
+  }
+  
+  .h-disabled {
+    display: flex;
+    text-decoration: line-through;
+  }
+  
+  .h-counter {
+    border: 0.06rem solid var(--grey-light);
+  }
+  
+  .h-counter-container {
+    height: 2rem;
+    display: flex;
+    justify-content: space-between;
+    color: var(--grey);
+  }
+  
+  .h-counter-container p {
+    align-self: center;
+  }
+  
+  .h-counter-container button {
+    border: none;
+    background-color: transparent;
+    color: var(--grey);
+    font-size: 1rem;
+  }
+  
+  .h-scroll {
+    height: 15rem;
+    scrollbar-width: thin;
+  }
+  
+  .h-scroll::-webkit-scrollbar {
+    width: 0.6rem;
+  }
+  
+  .h-scroll::-webkit-scrollbar-thumb {
+    background-color: var(--blue);
+    border-radius: 0.5rem;
+  }
+  
+  .h-scroll::-webkit-scrollbar-track {
+    display: none;
+  }
+  
+  #h-editTaskButton {
+    color: var(--white);
+    font-size: 0.8rem;
+    padding:  0.3rem;
+    border-radius: 1.0rem;
+    background-color: var(--blue);
+    border: none;
+  }
+
+  #h-deleteTaskButton {
+    color: var(--white);
+    font-size: 0.8rem;
+    padding:  0.3rem;
+    border-radius: 0.3rem;
+    background-color: var(--red);
+    border: none;
+  }
+
+
+
   /* Todo Container */
   
   .todo {
@@ -53,17 +216,19 @@
     flex-direction: column;
     justify-content: space-around;
     border-radius: 2rem;
-    background: var(--white);
+    background: var(--transparent);
     padding: 3rem;
     height: 50%;
     width: 60%;
     box-shadow: 0 1rem 3rem 1rem rgba(0, 23, 71, 0.15);
     max-width: 40rem;
+    z-index: 1;
   }
   
   h2 {
     text-transform: uppercase;
-    height: 3rem;
+    height: 5rem;
+    font-size:  1.8rem;
     color: var(--dark);
     text-align: center;
   }
@@ -181,28 +346,7 @@
     color: var(--grey);
     font-size: 1rem;
   }
-  
-  .footer {
-    display: flex;
-    gap: 1.8rem;
-    background-color: var(--white);
-    padding: 1.2rem;
-    border-radius: 0.5rem;
-  }
-  
-  .made-by,
-  .author {
-    font-size: 0.9rem;
-  }
-  
-  .made-by {
-    color: var(--grey-dark);
-  }
-  
-  .author {
-    color: var(--blue);
-    font-weight: bold;
-  }
+
   
   .scroll {
     height: 15rem;

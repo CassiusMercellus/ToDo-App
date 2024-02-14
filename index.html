@@ -9,6 +9,33 @@
     <title>ToDo App</title>
   </head>
   <body>
+
+    <!-- Making new Todo Lists-->
+
+    <section class="h-todo">
+        <h2>To-do list</h2>
+        <div class="h-input">
+          <input
+            type="text"
+            class="h-input-field"
+            id="h-todoInput"
+            placeholder="Add a new todo"
+          />
+          <button class="h-btn">Add</button>
+        </div>
+        <ul class="h-scroll">
+          <li id="h-todoList"></li>
+        </ul>
+        <div>
+          <hr class="h-counter" />
+          <div class="h-counter-container">
+            <p><span id="h-todoCount">0</span> items total</p>
+            <button id="h-deleteButton">Delete All</button>
+          </div>
+        </div>
+      </section>
+
+    <!-- The To Do List Itself-->
     <section class="todo">
       <h2>To-do list</h2>
       <div class="input">
@@ -31,11 +58,5 @@
         </div>
       </div>
     </section>
-    <footer>
-      <div class="footer">
-        <p class="made-by">Made By</p>
-        <p class="author">Cassius Clay</p>
-      </div>
-    </footer>
   </body>
 </html>
