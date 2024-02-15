@@ -1,8 +1,2 @@
-1. Remove Edit button
-2. Car Background
-3. blurred main app section
-4. Finish Functionality for multiple todo lists
-    A. Add the ability to create unique todo lists that are saved and loaded when going back and forth between main hub and the todo list
-    B. Add ability to delete todo lists
-    C. 
-    D.
+JavaScript todoList
+1. Utilize the generate ID to ID each 

@@ -1,4 +1,7 @@
+import { appState } from './shared.js'
 // Retrieve todo from local storage or initialize an empty array
+
+
 let todo = JSON.parse(localStorage.getItem("todo")) || [];
 const todoInput = document.getElementById("todoInput");
 const todoList = document.getElementById("todoList");
@@ -127,3 +130,4 @@ function handleDrop(event) {
   saveToLocalStorage();
   displayTasks();
 }
+
