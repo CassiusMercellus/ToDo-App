@@ -55,27 +55,12 @@ function displayTasks() {
             <button id="deleteTaskButton">Delete</button>
         </div>
     `;
-    var checkbox = div.querySelector(".todo-checkbox");
-    checkbox.addEventListener("change", () => {
-        toggleTask(index);
-        // Check if any task is checked
-        var anyChecked = document.querySelectorAll(".todo-checkbox:checked").length > 0;
-        
-        // Get the clearCompletedButton element
-        var clearCompletedButton = document.getElementById("clearCompletedButton");
-        
-        // Change display property based on if any task is checked
-        if (anyChecked) {
-            clearCompletedButton.style.display = "contents";
-        } else {
-            clearCompletedButton.style.display = "none";
-        }
-    });
-
-    document.getElementById('clearCompletedButton').addEventListener('click', clearCompleted);
     div.querySelector("#editTaskButton").addEventListener("click", function () {
         editTask(index);
       });
+    div.querySelector(".todo-checkbox").addEventListener("change", () =>
+      toggleTask(index)
+    );
     div.querySelector("#deleteTaskButton").addEventListener("click", function () {
       deleteTask(index);
     });
@@ -91,14 +76,6 @@ function displayTasks() {
     container.addEventListener("drop", handleDrop);
   });
 }
-
-function clearCompleted() {
-    todo = todo.filter(item => !item.disabled); // Filter out completed tasks
-    clearCompletedButton.style.display = "none";
-    saveToLocalStorage();
-    displayTasks();
-}
-
 
 function editTask(index) {
   const todoItem = document.getElementById(`todo-${index}`);

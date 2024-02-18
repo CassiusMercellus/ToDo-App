@@ -12,18 +12,17 @@
   </head>
   <body>
     <!-- Making new Todo Lists-->
-    <section class="h-todo">
-      <h2>To-do hub</h2>
-      <div class="h-input">
-          <input type="text" class="h-input-field" id="h-todoInput" placeholder="Create new list"/>
-          <button class="h-btn">Add</button>
+    <section class="hub">
+      <h2>Task Hub</h2>
+      <div class="hub-input">
+          <input type="text" class="h-input-field" id="hub-Input" placeholder="Create new list"/>
+          <button class="hub-btn">Create</button>
       </div>
-      <ul class="h-scroll" id="h-todoList"></ul>
+      <ul class="hub-scroll" id="hubList"></ul>
       <div>
-          <hr class="h-counter" />
-          <div class="h-counter-container">
-              <p><span id="h-todoCount">0</span> ToDo Lists</p>
-              <button id="h-deleteButton">Delete All</button>
+          <hr class="hubCounter" />
+          <div class="hubCounterContainer">
+              <p><span id="hubCount">0</span> Task Hubs</p>
           </div>
       </div>
     </section>
@@ -47,6 +46,7 @@
         <hr class="counter" />
         <div class="counter-container">
           <p><span id="todoCount">0</span> items total</p>
+          <button id="clearCompletedButton">Clear Completed</button>
           <button id="deleteButton">Delete All</button>
         </div>
       </div>

@@ -1,2 +1,0 @@
-JavaScript todoList
-1. Utilize the generate ID to ID each 

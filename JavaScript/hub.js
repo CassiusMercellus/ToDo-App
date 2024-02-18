@@ -1,66 +1,66 @@
 import { appState } from './shared.js'
 
-let htodo = JSON.parse(localStorage.getItem("h-todo")) || [];
-const htodoInput = document.getElementById("h-todoInput");
-const htodoList = document.getElementById("h-todoList");
-const htodoCount = document.getElementById("h-todoCount");
-const haddButton = document.querySelector(".h-btn");
-const hdeleteButton = document.getElementById("h-deleteButton");
+let hub = JSON.parse(localStorage.getItem("hub")) || [];
+const hubInput = document.getElementById("hub-Input");
+const hubList = document.getElementById("hubList");
+const hubCount = document.getElementById("hubCount");
+const hubAddButton = document.querySelector(".hub-btn");
+const hubDeleteButton = document.getElementById("hubDeleteButton");
 
 // Initialize
 document.addEventListener("DOMContentLoaded", function () {
-    haddButton.addEventListener("click", addTask);
-    htodoInput.addEventListener("keydown", function (event) {
+    hubAddButton.addEventListener("click", addHub);
+    hubInput.addEventListener("keydown", function (event) {
       if (event.key === "Enter") {
         event.preventDefault(); // Prevents default Enter key behavior
-        addTask();
+        addHub();
       }
     });
-    appState.CreateTodoList(document.querySelector("#h-todoInput").value)
-    hdeleteButton.addEventListener("click", deleteAllTasks);
-    displayTasks();
+    appState.CreateTodoList(document.querySelector("#hubInput").value)
+    hubDeleteButton.addEventListener("click", deleteAllHubs);
+    displayHub();
   });
   
-  function addTask() {
-    const newTask = htodoInput.value.trim();
-    if (newTask !== "") {
-      htodo.push({ text: newTask, disabled: false });
+  function addHub() {
+    const newHub = hubInput.value.trim();
+    if (newHub !== "") {
+      hub.push({ text: newHub, disabled: false });
       saveToLocalStorage();
-      htodoInput.value = "";
-      displayTasks();
+      hubInput.value = "";
+      displayHubs();
     }
   }
   
-  function deleteTask(index) {
-    htodo.splice(index, 1);
+  function deleteHub(index) {
+    hub.splice(index, 1);
     saveToLocalStorage();
-    displayTasks();
+    displayHubs();
   }
   
-  function displayTasks() {
-    htodoList.innerHTML = "";
-    htodo.forEach((item, index) => {
+  function displayHubs() {
+    hubList.innerHTML = "";
+    hub.forEach((item, index) => {
       const div = document.createElement("div");
-      div.classList.add("h-todoContainer");
+      div.classList.add("hubContainer");
       div.draggable = true;
       div.dataset.index = index; // Store the index of the item
       div.innerHTML = `
-          <div class="h-todoContainer-left">
-            <p id="h-todo-${index}" class="h-${item.disabled ? "disabled" : ""}" onclick="editTask(${index})">${item.text}</p>
+          <div class="hubContainer-left">
+            <p id="hub-${index}" class="${item.disabled ? "disabled" : ""}">${item.text}</p>
           </div>
-          <div class="h-todoContainer-right">
-            <button id="h-deleteTaskButton">Delete</button>
+          <div class="hubContainer-right">
+            <button id="hubDeleteButton">Delete</button>
           </div>
       `;
-      div.querySelector("#h-deleteTaskButton").addEventListener("click", function () {
-        deleteTask(index);
+      div.querySelector("#hubDeleteButton").addEventListener("click", function () {
+        deleteHub(index);
       });
-      htodoList.appendChild(div);
+      hubList.appendChild(div);
     });
-    htodoCount.textContent = htodo.length;
+    hubCount.textContent = hub.length;
   
     // Add event listeners for drag and drop
-    const containers = document.querySelectorAll(".h-todoContainer");
+    const containers = document.querySelectorAll(".hubContainer");
     containers.forEach(container => {
       container.addEventListener("dragstart", handleDragStart);
       container.addEventListener("dragover", handleDragOver);
@@ -68,20 +68,20 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
   
-  function toggleTask(index) {
-    htodo[index].disabled = !htodo[index].disabled;
+  function togglehub(index) {
+    hub[index].disabled = !hub[index].disabled;
     saveToLocalStorage();
-    displayTasks();
+    displayHubs();
   }
   
-  function deleteAllTasks() {
-    htodo = [];
+  function deleteAllHubs() {
+    hub = [];
     saveToLocalStorage();
-    displayTasks();
+    displayHubs();
   }
   
   function saveToLocalStorage() {
-    localStorage.setItem("h-todo", JSON.stringify(htodo));
+    localStorage.setItem("hub", JSON.stringify(hub));
   }
   
   function handleDragStart(event) {
@@ -101,10 +101,10 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
   
-    // Reorder the todo array
-    const draggedItem = htodo.splice(draggedIndex, 1)[0];
-    htodo.splice(targetIndex, 0, draggedItem);
+    // Reorder the hub array
+    const draggedItem = hub.splice(draggedIndex, 1)[0];
+    hub.splice(targetIndex, 0, draggedItem);
   
     saveToLocalStorage();
-    displayTasks();
+    displayHubs();
   } 
