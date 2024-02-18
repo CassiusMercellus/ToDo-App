@@ -16,7 +16,7 @@
   }
   
   body {
-    background-image: url(/Assets/Agera.jpg);
+    background-image: url(../Assets/Agera.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -223,7 +223,6 @@
     width: 60%;
     box-shadow: 0 1rem 3rem 1rem rgba(0, 23, 71, 0.15);
     max-width: 40rem;
-    z-index: 1;
   }
   
   .todo h2 {
