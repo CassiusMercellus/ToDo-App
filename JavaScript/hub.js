@@ -1,28 +1,31 @@
-import { hub, createNewTask, hubs } from './shared.js'
+import { appState } from './shared.js'
 
+let hub = JSON.parse(localStorage.getItem("hub")) || [];
 const hubInput = document.getElementById("hub-Input");
 const hubList = document.getElementById("hubList");
 const hubCount = document.getElementById("hubCount");
 const hubAddButton = document.querySelector(".hub-btn");
+const hubDeleteButton = document.getElementById("hubDeleteButton");
 
+// Initialize
 document.addEventListener("DOMContentLoaded", function () {
     hubAddButton.addEventListener("click", addHub);
     hubInput.addEventListener("keydown", function (event) {
       if (event.key === "Enter") {
-        event.preventDefault(); 
+        event.preventDefault(); // Prevents default Enter key behavior
         addHub();
       }
     });
-
-    displayHubs();
+    appState.CreateTodoList(document.querySelector("#hubInput").value)
+    hubDeleteButton.addEventListener("click", deleteAllHubs);
+    displayHub();
   });
   
   function addHub() {
-    // Make sure is selected when created
     const newHub = hubInput.value.trim();
     if (newHub !== "") {
-      createNewHub(newHub)
-      // saveToLocalStorage();
+      hub.push({ text: newHub, disabled: false });
+      saveToLocalStorage();
       hubInput.value = "";
       displayHubs();
     }
@@ -36,17 +39,14 @@ document.addEventListener("DOMContentLoaded", function () {
   
   function displayHubs() {
     hubList.innerHTML = "";
-    let index = 0
-  
-    for (const todoName in hub) {
-      const disabled = !hub[todoName].isCompleted
+    hub.forEach((item, index) => {
       const div = document.createElement("div");
       div.classList.add("hubContainer");
       div.draggable = true;
-      div.dataset.index = index;
+      div.dataset.index = index; // Store the index of the item
       div.innerHTML = `
           <div class="hubContainer-left">
-            <p id="hub-${index}" class="${disabled ? "disabled" : ""}">${todoName}</p>
+            <p id="hub-${index}" class="${item.disabled ? "disabled" : ""}">${item.text}</p>
           </div>
           <div class="hubContainer-right">
             <button id="hubDeleteButton">Delete</button>
@@ -56,10 +56,10 @@ document.addEventListener("DOMContentLoaded", function () {
         deleteHub(index);
       });
       hubList.appendChild(div);
-      index++
-    };
+    });
     hubCount.textContent = hub.length;
   
+    // Add event listeners for drag and drop
     const containers = document.querySelectorAll(".hubContainer");
     containers.forEach(container => {
       container.addEventListener("dragstart", handleDragStart);
@@ -100,7 +100,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (draggedIndex === targetIndex) {
       return;
     }
-
+  
+    // Reorder the hub array
     const draggedItem = hub.splice(draggedIndex, 1)[0];
     hub.splice(targetIndex, 0, draggedItem);
   
