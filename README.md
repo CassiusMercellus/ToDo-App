@@ -6,8 +6,7 @@ shared.js file
 - when a hub item is loaded be sure to add some CSS styling to ensure its clear
 that it  has been selected (i.e., change color of text)
 - when a hub item is deleted everything saved to it is as well
-- when switching between hub items the CSS changes alongside a new todo 
-variable is loaded
+- remove the ability to add tasks when there is no hub present
 
 BugFixes
 - Fixed Background img to work on various devices

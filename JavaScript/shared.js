@@ -1,53 +1,66 @@
+// let todo = JSON.parse(localStorage.getItem("todo")) || [];
+// let hub = JSON.parse(localStorage.getItem("hub")) || [];
+
+// Creates the object to store todo lists (should be empty)
+let hubs = {
+    'hub 1': {
+        'my todo 1': {
+            isCompleted: false
+        },
+        'my todo 2': {
+            isCompleted: false
+        }
+    },
+    'hub 2': {
+        'my todo 3': {
+            isCompleted: false
+        },
+        'my todo 4': {
+            isCompleted: false
+        }
+    }
+};
+
+let hub = hubs['hub 1'] // should be empty
+let todo = hub['my todo 1'] // item within hub that probably should be empty
 
 
-function getRandomId() {
-    var S4 = function() {
-       return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-    };
-    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+const createNewHub = (hubName) => {
+    hubs[hubName] = {}
 }
 
-class AppState {
-
-    constructor() {
-        this.listOfTodoLists = []
-        this.currentTodoListId = '';
+const createNewTask = (hubName, taskName) => {
+    // if there are no hubs (should be ran in the add task function)
+    if (hubs?.[hubName] === undefined) {
+        console.log(`hubName ${hubName }with taskName ${taskName} does not exist. Current hubs looks like...`, hubs)
+        return;
     }
-
-    CreateTodoList(todoListName) {
-        this.listOfTodoLists.push(new TodoList(todoListName))
-    }
-
-    setCurrentTodoListId(id) {
-        this.currentTodoListId = id;
+// todoInput.value = taskName
+    hubs[hubName][taskName] = {
+        isCompleted: false
     }
 }
-
-class TodoList {
-    constructor(todoListName) {
-        this.todoListName = todoListName()
-        this.todoListId = getRandomId()
-        this.todos = []
+// detect when hubcontainer selected
+/* 
+div.querySelector(".hubContainer").addEventListener("click", function (event) {
+    let selected = event.target.querySelector(".hubContainer").textContent;
+    if (selected.classList.contains( "selected" )) {
+        console.log("hub is already selected")
+    } else {
+        selectHub(selected);
     }
-
-    addTodo(todoItem) {
-        this.todos.push(todoItem)
-    }
-}
-
-class Todo {
-    constructor(text) {
-        this.todoId = getRandomId()
-        this.text = text;
-        this.completed = false;
-    }
+  });
+*/
+function selectHub(selected) {
+    // clear the selected class from any hub object
+    // load content from hub name from hubs object
 }
 
 
-let appState = new AppState();
-
-console.log('appState', appState)
-
+// Exported Vars
 export {
-    appState
+    createNewHub,
+    createNewTask,
+    hub, todo, hubs
 }
+

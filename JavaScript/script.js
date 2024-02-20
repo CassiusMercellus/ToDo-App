@@ -1,8 +1,7 @@
-import { appState } from './shared.js'
+import { todo, hub } from './shared.js'
 // Retrieve todo from local storage or initialize an empty array
 
 
-let todo = JSON.parse(localStorage.getItem("todo")) || [];
 const todoInput = document.getElementById("todoInput");
 const todoList = document.getElementById("todoList");
 const todoCount = document.getElementById("todoCount");
@@ -14,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
   addButton.addEventListener("click", addTask);
   todoInput.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
-      event.preventDefault(); // Prevents default Enter key behavior
+      event.preventDefault();
       addTask();
     }
   });
@@ -22,21 +21,21 @@ document.addEventListener("DOMContentLoaded", function () {
   displayTasks();
 });
 
-function addTask() {
-  const newTask = todoInput.value.trim();
-  if (newTask !== "") {
-    todo.push({ text: newTask, disabled: false });
-    saveToLocalStorage();
-    todoInput.value = "";
-    displayTasks();
-  }
-}
+/* 
+display task function
+- checks all the items within the todo 
+- allows things to be draggable
+- adds HTML in order to add the item that is the task
+- checks if any of the todos are checked
+- clear all checked button
+- toggles button visibility
+- edit task button
+- delete task button
+- dragging functionality
 
-function deleteTask(index) {
-  todo.splice(index, 1);
-  saveToLocalStorage();
-  displayTasks();
-}
+What it needs to do
+- save todos to the hub selected
+*/
 
 function displayTasks() {
   todoList.innerHTML = "";
@@ -44,7 +43,7 @@ function displayTasks() {
     const div = document.createElement("div");
     div.classList.add("todoContainer");
     div.draggable = true;
-    div.dataset.index = index; // Store the index of the item
+    div.dataset.index = index;
     div.innerHTML = `
         <div class="todoContainer-left">
             <input type="checkbox" class="todo-checkbox" id="input-${index}" ${item.disabled ? "checked" : ""}>
@@ -58,13 +57,8 @@ function displayTasks() {
     var checkbox = div.querySelector(".todo-checkbox");
     checkbox.addEventListener("change", () => {
         toggleTask(index);
-        // Check if any task is checked
-        var anyChecked = document.querySelectorAll(".todo-checkbox:checked").length > 0;
-        
-        // Get the clearCompletedButton element
-        var clearCompletedButton = document.getElementById("clearCompletedButton");
-        
-        // Change display property based on if any task is checked
+        var anyChecked = document.querySelectorAll(".todo-checkbox:checked").length > 0;      
+        var clearCompletedButton = document.getElementById("clearCompletedButton");     
         if (anyChecked) {
             clearCompletedButton.style.display = "contents";
         } else {
@@ -83,7 +77,6 @@ function displayTasks() {
   });
   todoCount.textContent = todo.length;
 
-  // Add event listeners for drag and drop
   const containers = document.querySelectorAll(".todoContainer");
   containers.forEach(container => {
     container.addEventListener("dragstart", handleDragStart);
@@ -92,13 +85,72 @@ function displayTasks() {
   });
 }
 
+/* 
+add task function
+- checks if there are any hubs
+- if there is no hub selected it simply console logs
+- if there is a hub selected it adds a new task and saves to localstorage
+- then updates display tasks
+
+What it needs to do
+- should check if there are any hubs selected
+- be saved to the hub selected (can likely be done via displayTasks function)
+- save the hub to localstorage
+*/
+function addTask() {
+  if (hub = []) {
+    console.log("no hubs")
+  } else {
+    const taskName = todoInput.value.trim();
+    if (taskName !== "") {
+      createNewTask(hubName, taskName)
+      // saveToLocalStorage();
+      todoInput.value = "";
+      displayTasks();
+    }
+  }
+  
+}
+
+/* 
+delete task function
+- simply removes a task
+- saves the change to localstorage
+- runs displayTasks
+
+What it needs to do
+- be saved to the hub selected (can likely be done via displayTasks function)
+*/
+
+function deleteTask(index) {
+  todo.splice(index, 1);
+  saveToLocalStorage();
+  displayTasks();
+}
+
+/* 
+clear completed function
+- checks if task is completed
+- clears completed
+- saves localstorage
+- updates displayTasks
+
+*/
+
 function clearCompleted() {
-    todo = todo.filter(item => !item.disabled); // Filter out completed tasks
+    todo = todo.filter(item => !item.disabled);
     clearCompletedButton.style.display = "none";
     saveToLocalStorage();
     displayTasks();
 }
 
+/* 
+edit task function
+- allows you to edit the task the button corresponds to
+
+What it needs to do
+- be saved to the hub selected (can likely be done via displayTasks function)
+*/
 
 function editTask(index) {
   const todoItem = document.getElementById(`todo-${index}`);
@@ -152,7 +204,6 @@ function handleDrop(event) {
     return;
   }
 
-  // Reorder the todo array
   const draggedItem = todo.splice(draggedIndex, 1)[0];
   todo.splice(targetIndex, 0, draggedItem);
 
